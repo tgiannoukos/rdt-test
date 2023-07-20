@@ -26,8 +26,8 @@ function start()
 
                         pqos -I -r -m all:[$i] > $i/pqos_$mba.txt & # pqos as monitor
 
-                        echo "/Users/akis/Linux/mlc --loaded_latency -d0 $operation -t300 -T -k$i > $i/$mba.txt" # run 5min
-                        /Users/akis/Linux/mlc --loaded_latency -d0 $operation -t300 -T -k$i > $i/$mba.txt # run 5min
+                        echo "/users/akis/Linux/mlc --loaded_latency -d0 $operation -t300 -T -k$i > $i/$mba.txt" # run 5min
+                        /users/akis/Linux/mlc --loaded_latency -d0 $operation -t300 -T -k$i > $i/$mba.txt # run 5min
                         pkill -9 pqos # close pqos
                         pqos -I -R # reset all RDT  settings.
 
