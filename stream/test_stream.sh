@@ -9,7 +9,7 @@ function start()
         for mba in $(seq 10 10 100)
         do
                 pqos -I -R
-                pqos -I -e mba:1=$mba  # bound MBA policy to COS1
+                pqos -I -e mba:0=$mba  # bound MBA policy to COS1
 
                 echo -n "COS1 cpus_list:"
                 cat /sys/fs/resctrl/COS1/cpus_list
