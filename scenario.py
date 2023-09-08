@@ -12,7 +12,7 @@ def set_pid_association(class_id, pids):
 
     Parameters:
         class_id: class of service ID
-        cores: a list of cores
+        pids: a list of pids
     """
 
     alloc = PqosAlloc()
@@ -120,17 +120,31 @@ def main():
             if args.cores:
                 set_allocation_class(args.class_id, args.cores)
 
-            print_allocation_config()
+            # print_allocation_config()
     except:
         print("Error!")
         raise
 
-    program = 'a = 5\nb=10\nprint("Sum =", a+b)'
-    exec(program)
 
-    pid = Popen(['python', 'sleep_test.py']).pid
-    pids = [pid]
-    set_pid_association(1, pids)
+    proc = Popen(['./stream/stream'])
+    
+    # proc = Popen(['stress-ng --memrate 1  -t 1m'], shell=True)
+    print("PID:", proc.pid)
+    pids = [proc.pid]
+    
+
+    try:
+        with PqosContextManager(args.interface):
+            # print("Using interface:", args.interface)
+            if args.cores:
+                set_pid_association(1, pids)
+
+            # print_allocation_config()
+    except:
+        print("Error!")
+        raise
+
+    proc.wait()
 
 
 if __name__ == "__main__":
